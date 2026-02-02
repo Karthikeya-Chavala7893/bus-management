@@ -798,6 +798,38 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Send Notification Panel -->
+                    <div class="admin-data-card" id="adminNotificationPanel">
+                        <div class="admin-card-header">
+                            <h3>📢 Send Notification to Students</h3>
+                        </div>
+                        <div class="admin-notification-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="notifTitle">Title</label>
+                                    <input type="text" id="notifTitle" placeholder="e.g., Route 5 Delayed">
+                                </div>
+                                <div class="form-group">
+                                    <label for="notifType">Type</label>
+                                    <select id="notifType">
+                                        <option value="info">ℹ️ Info</option>
+                                        <option value="warning">⚠️ Warning</option>
+                                        <option value="success">✅ Success</option>
+                                        <option value="alert">🔔 Alert</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="notifMessage">Message</label>
+                                <textarea id="notifMessage" rows="3"
+                                    placeholder="Enter notification message for students..."></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-full" onclick="handleSendNotification()">
+                                📤 Send Notification
+                            </button>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- Fleet Page -->

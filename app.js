@@ -96,6 +96,89 @@ function getActiveBookingsToday() {
     return getTodaysBookings().filter(b => b.status === 'confirmed');
 }
 
+// ============================================
+// NOTIFICATION DATA MANAGEMENT
+// ============================================
+
+// Get all notifications from localStorage
+function getNotifications() {
+    const data = localStorage.getItem('busNotifications');
+    if (data) {
+        return JSON.parse(data);
+    }
+    return [];
+}
+
+// Save notifications to localStorage
+function saveNotifications(notifications) {
+    localStorage.setItem('busNotifications', JSON.stringify(notifications));
+}
+
+// Admin sends a notification to students
+function sendAdminNotification(title, message, type = 'info') {
+    const notifications = getNotifications();
+    const notification = {
+        id: Date.now(),
+        title,
+        message,
+        type, // 'info', 'warning', 'success', 'alert'
+        sender: 'Admin',
+        timestamp: new Date().toISOString(),
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        date: getTodayDateString(),
+        read: false
+    };
+    notifications.unshift(notification); // Add to beginning
+    saveNotifications(notifications);
+    showToast('📢 Notification sent to all students!');
+    return notification;
+}
+
+// Get notifications for students (sorted by newest first)
+function getStudentNotifications() {
+    const notifications = getNotifications();
+    return notifications.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+}
+
+// Get unread notification count
+function getUnreadNotificationCount() {
+    const notifications = getNotifications();
+    return notifications.filter(n => !n.read).length;
+}
+
+// Mark notification as read
+function markNotificationRead(notificationId) {
+    const notifications = getNotifications();
+    const notif = notifications.find(n => n.id === notificationId);
+    if (notif) {
+        notif.read = true;
+        saveNotifications(notifications);
+    }
+}
+
+// Mark all notifications as read
+function markAllNotificationsRead() {
+    const notifications = getNotifications();
+    notifications.forEach(n => n.read = true);
+    saveNotifications(notifications);
+}
+
+// Get time ago string
+function getTimeAgo(timestamp) {
+    const now = new Date();
+    const then = new Date(timestamp);
+    const diffMs = now - then;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    if (diffDays === 1) return 'Yesterday';
+    return `${diffDays} days ago`;
+}
+
 
 // ============================================
 // ROUTER - Hash-based Navigation
@@ -776,6 +859,28 @@ function getStudentPageContent(pageName) {
                 </div>
             `;
         case 'alerts':
+            const notifications = getStudentNotifications();
+            const iconMap = { info: '🚌', warning: '⚠️', success: '✅', alert: '🔔' };
+
+            // Mark all as read when viewing
+            markAllNotificationsRead();
+
+            if (notifications.length === 0) {
+                return `
+                    <div class="student-page-content">
+                        <div class="student-page-header">
+                            <h1>Notifications</h1>
+                            <p>Your recent alerts and updates</p>
+                        </div>
+                        <div class="empty-bookings">
+                            <span class="empty-icon">🔔</span>
+                            <h3>No Notifications Yet</h3>
+                            <p>You'll receive updates from admin here</p>
+                        </div>
+                    </div>
+                `;
+            }
+
             return `
                 <div class="student-page-content">
                     <div class="student-page-header">
@@ -783,38 +888,16 @@ function getStudentPageContent(pageName) {
                         <p>Your recent alerts and updates</p>
                     </div>
                     <div class="student-alerts-list">
-                        <div class="student-alert-item unread">
-                            <div class="alert-icon info">🚌</div>
+                        ${notifications.map(notif => `
+                        <div class="student-alert-item ${notif.read ? '' : 'unread'}">
+                            <div class="alert-icon ${notif.type}">${iconMap[notif.type] || '📢'}</div>
                             <div class="alert-content">
-                                <span class="alert-title">Route 5 Arriving Soon</span>
-                                <span class="alert-message">Bus will reach Engineering Block in 5 minutes</span>
-                                <span class="alert-time">2 mins ago</span>
+                                <span class="alert-title">${notif.title}</span>
+                                <span class="alert-message">${notif.message}</span>
+                                <span class="alert-time">${getTimeAgo(notif.timestamp)}</span>
                             </div>
                         </div>
-                        <div class="student-alert-item unread">
-                            <div class="alert-icon warning">⚠️</div>
-                            <div class="alert-content">
-                                <span class="alert-title">Route 3 Delayed</span>
-                                <span class="alert-message">Hostel Express is running 5 minutes behind schedule</span>
-                                <span class="alert-time">10 mins ago</span>
-                            </div>
-                        </div>
-                        <div class="student-alert-item unread">
-                            <div class="alert-icon success">✅</div>
-                            <div class="alert-content">
-                                <span class="alert-title">SMS Alert Enabled</span>
-                                <span class="alert-message">You will receive SMS notifications for Route 5</span>
-                                <span class="alert-time">1 hour ago</span>
-                            </div>
-                        </div>
-                        <div class="student-alert-item">
-                            <div class="alert-icon info">📋</div>
-                            <div class="alert-content">
-                                <span class="alert-title">Schedule Updated</span>
-                                <span class="alert-message">Evening timings have been updated for all routes</span>
-                                <span class="alert-time">Yesterday</span>
-                            </div>
-                        </div>
+                        `).join('')}
                     </div>
                 </div>
             `;
@@ -938,6 +1021,25 @@ function updateAdminBookingStats() {
     }
 }
 
+// Handle admin sending notification to students
+function handleSendNotification() {
+    const title = document.getElementById('notifTitle').value.trim();
+    const message = document.getElementById('notifMessage').value.trim();
+    const type = document.getElementById('notifType').value;
+
+    if (!title || !message) {
+        showToast('Please enter both title and message');
+        return;
+    }
+
+    sendAdminNotification(title, message, type);
+
+    // Clear form
+    document.getElementById('notifTitle').value = '';
+    document.getElementById('notifMessage').value = '';
+    document.getElementById('notifType').value = 'info';
+}
+
 // ============================================
 // KEYBOARD SHORTCUTS
 // ============================================
@@ -1033,3 +1135,4 @@ window.showStudentNotifications = showStudentNotifications;
 window.showStudentPage = showStudentPage;
 window.bookSeat = bookSeat;
 window.cancelStudentBooking = cancelStudentBooking;
+window.handleSendNotification = handleSendNotification;

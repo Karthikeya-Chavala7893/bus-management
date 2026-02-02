@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="College Bus Tracking System - Know when your bus arrives. Get SMS alerts. Works offline.">
+    <title>College Bus Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="6" width="18" height="12" rx="2" />
+                    <circle cx="7" cy="18" r="2" />
+                    <circle cx="17" cy="18" r="2" />
+                    <path d="M5 6V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span>BusTrack</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+                <button class="btn btn-nav" id="openLogin">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">🚌 Smart Campus Transport</span>
+                <h1>Track Your <span class="gradient-text">College Bus</span> in Real-Time</h1>
+                <p class="hero-subtitle">AI-powered predictions, SMS alerts, and offline access. Never miss your bus
+                    again.</p>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" id="heroLogin">
+                        Get Started
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <a href="#how-it-works" class="btn btn-outline btn-large">Learn More</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <strong>2,500+</strong>
+                        <span>Active Students</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>83%</strong>
+                        <span>Accuracy Rate</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>15</strong>
+                        <span>Campus Routes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Illustration -->
+            <div class="hero-visual">
+                <div class="bus-card">
+                    <div class="bus-card-header">
+                        <span class="live-dot"></span>
+                        <span>Route 5 - Engineering Block</span>
+                    </div>
+                    <div class="bus-card-body">
+                        <div class="bus-eta">
+                            <span class="eta-label">Arriving in</span>
+                            <span class="eta-time">3 min</span>
+                        </div>
+                        <div class="bus-stops">
+                            <div class="stop completed"><span class="stop-dot"></span> Main Gate</div>
+                            <div class="stop completed"><span class="stop-dot"></span> Library</div>
+                            <div class="stop active"><span class="stop-dot"></span> Science Block</div>
+                            <div class="stop"><span class="stop-dot"></span> Engineering Block</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section" id="features">
+            <div class="section-header">
+                <span class="section-badge">Features</span>
+                <h2>Everything You Need</h2>
+                <p>Designed for students, drivers, and administrators</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                    </div>
+                    <h3>Live Tracking</h3>
+                    <p>Real-time bus locations updated as drivers check in at each stop</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                    </div>
+                    <h3>SMS Alerts</h3>
+                    <p>Get notifications on any phone - no smartphone or internet required</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3>AI Predictions</h3>
+                    <p>Machine learning analyzes patterns to predict accurate arrival times</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-orange">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                            <line x1="12" y1="2" x2="12" y2="12" />
+                        </svg>
+                    </div>
+                    <h3>Works Offline</h3>
+                    <p>Access schedules and cached data even without internet connection</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Role Cards Section -->
+        <section class="section section-dark">
+            <div class="section-header">
+                <span class="section-badge">Get Started</span>
+                <h2>Choose Your Role</h2>
+                <p>Select how you'll use the bus tracking system</p>
+            </div>
+
+            <div class="role-cards">
+                <!-- Student Card -->
+                <div class="role-card role-card-student">
+                    <div class="role-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <h3>Student</h3>
+                    <p class="role-desc">Track buses and receive alerts</p>
+                    <ul class="role-features">
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Real-time arrival times</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> SMS & push notifications</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Offline schedule access</li>
+                    </ul>
+                    <button class="btn btn-role btn-student" onclick="selectRole('Student')">
+                        Login as Student
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Driver Card -->
+                <div class="role-card role-card-driver">
+                    <div class="role-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <h3>Driver</h3>
+                    <p class="role-desc">Simple one-tap check-ins</p>
+                    <ul class="role-features">
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Easy stop check-ins</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Works 100% offline</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Auto-sync when online</li>
+                    </ul>
+                    <button class="btn btn-role btn-driver" onclick="selectRole('Driver')">
+                        Login as Driver
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Admin Card -->
+                <div class="role-card role-card-admin">
+                    <div class="role-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
+                    </div>
+                    <h3>Admin</h3>
+                    <p class="role-desc">Fleet monitoring & analytics</p>
+                    <ul class="role-features">
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Real-time dashboard</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Route analytics</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Schedule management</li>
+                    </ul>
+                    <button class="btn btn-role btn-admin" onclick="selectRole('Admin')">
+                        Login as Admin
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section" id="how-it-works">
+            <div class="section-header">
+                <span class="section-badge">Simple Process</span>
+                <h2>How It Works</h2>
+                <p>Three easy steps to never miss your bus</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Driver Checks In</h3>
+                        <p>At each bus stop, the driver taps a single button to record their arrival time.</p>
+                    </div>
+                </div>
+
+                <div class="step-connector"></div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>AI Predicts Arrival</h3>
+                        <p>Our system analyzes patterns and calculates accurate arrival times for each stop.</p>
+                    </div>
+                </div>
+
+                <div class="step-connector"></div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>You Get Notified</h3>
+                        <p>Receive real-time updates via the web portal or SMS on any mobile phone.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics -->
+        <section class="section section-gradient">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">2,500+</div>
+                    <div class="stat-label">Students Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Active Routes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">83%</div>
+                    <div class="stat-label">Prediction Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">500+</div>
+                    <div class="stat-label">Daily Trips</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="6" width="18" height="12" rx="2" />
+                        <circle cx="7" cy="18" r="2" />
+                        <circle cx="17" cy="18" r="2" />
+                        <path d="M5 6V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span>BusTrack</span>
+                </div>
+                <p>XYZ Engineering College</p>
+            </div>
+            <div class="footer-links">
+                <a href="#help">Help & Support</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 College Bus Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+
+            <!-- Role Selection -->
+            <div id="roleSelection">
+                <div class="modal-header">
+                    <h2>Welcome Back</h2>
+                    <p>Select your role to continue</p>
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-role-btn modal-role-student" onclick="selectRole('Student')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <span>Student</span>
+                    </button>
+                    <button class="modal-role-btn modal-role-driver" onclick="selectRole('Driver')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span>Driver</span>
+                    </button>
+                    <button class="modal-role-btn modal-role-admin" onclick="selectRole('Admin')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
+                        <span>Admin</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" style="display:none;">
+                <button class="back-link" onclick="showRoleSelection()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Back to role selection
+                </button>
+                <div class="modal-header">
+                    <div class="login-role-icon" id="loginRoleIcon"></div>
+                    <h2 id="roleTitle">Login</h2>
+                </div>
+                <form id="authForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="userId">ID / Email</label>
+                        <input type="text" id="userId" name="userId" required placeholder="Enter your ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full" id="loginSubmitBtn">
+                        Login
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <p class="forgot-link"><a href="#forgot">Forgot password?</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offline Banner -->
+    <div class="offline-banner" id="offlineBanner" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="1" y1="1" x2="23" y2="23" />
+            <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+            <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
+            <path d="M10.71 5.05A16 16 0 0 1 22.58 9" />
+            <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" />
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+            <line x1="12" y1="20" x2="12.01" y2="20" />
+        </svg>
+        Offline mode - Showing cached data
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

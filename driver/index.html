@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#10B981">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Bus Driver Check-in App">
+    <title>Bus Tracker - Driver</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-icon">🚌</div>
+            <h1>Bus Tracker</h1>
+            <p>Driver App</p>
+            <div class="splash-loader"></div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="screen" id="loginScreen" style="display: none;">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-icon">🚌</div>
+                <h1>Bus Tracker</h1>
+                <p>Driver Login</p>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Driver ID</label>
+                    <input type="text" id="driverId" placeholder="Enter your ID" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>PIN</label>
+                    <input type="password" id="driverPin" placeholder="Enter 4-digit PIN" maxlength="4"
+                        pattern="[0-9]{4}" required>
+                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Remember me</span>
+                </label>
+                <button type="submit" class="btn-login">LOGIN</button>
+            </form>
+            <a href="#" class="help-link" onclick="showHelp()">Need help?</a>
+        </div>
+    </div>
+
+    <!-- Onboarding Screen -->
+    <div class="screen" id="onboardingScreen" style="display: none;">
+        <div class="onboarding-container">
+            <div class="onboarding-slide active" id="slide1">
+                <div class="onboarding-image">
+                    <div class="demo-button demo-green">
+                        <span class="demo-icon">▶</span>
+                        <span>START TRIP</span>
+                    </div>
+                    <div class="demo-hand">👆</div>
+                </div>
+                <h2>Tap START TRIP</h2>
+                <p>When you leave the depot</p>
+            </div>
+            <div class="onboarding-slide" id="slide2">
+                <div class="onboarding-image">
+                    <div class="demo-button demo-blue">
+                        <span class="demo-icon">✓</span>
+                        <span>REACHED STOP</span>
+                    </div>
+                    <div class="demo-hand">👆</div>
+                </div>
+                <h2>Tap at Each Stop</h2>
+                <p>When you arrive at a bus stop</p>
+            </div>
+            <div class="onboarding-slide" id="slide3">
+                <div class="onboarding-image">
+                    <div class="demo-button demo-orange">
+                        <span class="demo-icon">■</span>
+                        <span>END TRIP</span>
+                    </div>
+                    <div class="demo-hand">👆</div>
+                </div>
+                <h2>Tap END TRIP</h2>
+                <p>When you return to depot</p>
+            </div>
+            <div class="onboarding-dots">
+                <span class="dot active" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
+                <span class="dot" onclick="goToSlide(3)"></span>
+            </div>
+            <button class="btn-onboarding" id="onboardingBtn" onclick="nextSlide()">NEXT</button>
+            <a href="#" class="skip-link" onclick="skipOnboarding()">Skip</a>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div class="screen" id="mainScreen" style="display: none;">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                <div class="header-info">
+                    <span class="driver-name" id="driverName">Ravi Kumar</span>
+                    <span class="bus-number" id="busNumber">Bus 101</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="sync-status" id="syncStatus">
+                    <span class="sync-icon offline">☁</span>
+                    <span class="sync-text">Offline</span>
+                </div>
+                <span class="current-time" id="currentTime">8:45 AM</span>
+            </div>
+        </header>
+
+        <!-- Menu Sidebar -->
+        <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+        <nav class="menu-sidebar" id="menuSidebar">
+            <div class="menu-header">
+                <span class="menu-title">Menu</span>
+                <button class="menu-close" onclick="toggleMenu()">×</button>
+            </div>
+            <ul class="menu-list">
+                <li onclick="showSchedule()">
+                    <span class="menu-icon">📅</span>
+                    <span>Today's Schedule</span>
+                </li>
+                <li onclick="showHistory()">
+                    <span class="menu-icon">📋</span>
+                    <span>Trip History</span>
+                </li>
+                <li onclick="showHelp()">
+                    <span class="menu-icon">❓</span>
+                    <span>Help</span>
+                </li>
+                <li onclick="showSettings()">
+                    <span class="menu-icon">⚙️</span>
+                    <span>Settings</span>
+                </li>
+                <li class="menu-emergency" onclick="callEmergency()">
+                    <span class="menu-icon">🚨</span>
+                    <span>Emergency</span>
+                </li>
+                <li onclick="logout()">
+                    <span class="menu-icon">🚪</span>
+                    <span>Logout</span>
+                </li>
+            </ul>
+            <div class="menu-footer">
+                <span class="sync-info" id="syncInfo">Last synced: Never</span>
+                <button class="btn-sync" onclick="manualSync()">Sync Now</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Status Card -->
+            <div class="status-card" id="statusCard">
+                <div class="status-icon" id="statusIcon">🚌</div>
+                <div class="status-text" id="statusText">Ready to start Route 5</div>
+                <div class="status-sub" id="statusSub">Engineering Loop • 7 stops</div>
+            </div>
+
+            <!-- Main Action Button -->
+            <button class="action-button" id="actionButton" onclick="handleMainAction()">
+                <span class="action-icon" id="actionIcon">▶</span>
+                <span class="action-text" id="actionText">START TRIP</span>
+            </button>
+
+            <!-- Success Animation Overlay -->
+            <div class="success-overlay" id="successOverlay">
+                <div class="success-circle">
+                    <span class="success-check">✓</span>
+                </div>
+                <span class="success-text" id="successText">Stop marked!</span>
+            </div>
+
+            <!-- Stop List -->
+            <div class="stop-list-container" id="stopListContainer">
+                <div class="stop-list-header">
+                    <span>Route Stops</span>
+                    <span class="stop-progress" id="stopProgress">0/7</span>
+                </div>
+                <div class="stop-list" id="stopList">
+                    <!-- Stops will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Passenger Count (Collapsed by default) -->
+            <div class="passenger-section" id="passengerSection">
+                <button class="passenger-toggle" id="passengerToggle" onclick="togglePassengerCount()">
+                    <span>Add passenger count (optional)</span>
+                    <span class="toggle-icon" id="toggleIcon">+</span>
+                </button>
+                <div class="passenger-controls" id="passengerControls" style="display: none;">
+                    <div class="passenger-count" id="passengerCount">0</div>
+                    <div class="count-buttons">
+                        <button class="count-btn minus" onclick="adjustCount(-1)">−</button>
+                        <button class="count-btn plus" onclick="adjustCount(1)">+</button>
+                    </div>
+                    <div class="quick-counts">
+                        <button class="quick-btn" onclick="setCount(0)">Empty</button>
+                        <button class="quick-btn" onclick="setCount(25)">Half</button>
+                        <button class="quick-btn" onclick="setCount(50)">Full</button>
+                    </div>
+                    <button class="btn-save-count" onclick="savePassengerCount()">Save Count</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Trip Complete Screen -->
+    <div class="screen" id="completeScreen" style="display: none;">
+        <div class="complete-container">
+            <div class="complete-icon">✓</div>
+            <h1>Trip Completed!</h1>
+            <p class="complete-time" id="completeTime">9:15 AM</p>
+
+            <div class="trip-summary">
+                <div class="summary-item">
+                    <span class="summary-label">Started</span>
+                    <span class="summary-value" id="summaryStart">7:32 AM</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Ended</span>
+                    <span class="summary-value" id="summaryEnd">9:15 AM</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Duration</span>
+                    <span class="summary-value" id="summaryDuration">1h 43m</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Stops</span>
+                    <span class="summary-value" id="summaryStops">7/7 ✓</span>
+                </div>
+                <div class="summary-item" id="passengerSummary" style="display: none;">
+                    <span class="summary-label">Passengers</span>
+                    <span class="summary-value" id="summaryPassengers">245</span>
+                </div>
+            </div>
+
+            <div class="sync-card" id="syncCard">
+                <span class="sync-card-icon" id="syncCardIcon">☁️</span>
+                <span class="sync-card-text" id="syncCardText">Will sync when WiFi available</span>
+                <span class="sync-card-sub" id="syncCardSub">1 trip waiting to sync</span>
+            </div>
+
+            <button class="btn-primary" onclick="startNewTrip()">Start Next Trip</button>
+            <button class="btn-secondary" onclick="goHome()">Back to Home</button>
+        </div>
+    </div>
+
+    <!-- Help Screen -->
+    <div class="screen" id="helpScreen" style="display: none;">
+        <header class="screen-header">
+            <button class="back-btn" onclick="closeHelp()">←</button>
+            <h2>Help</h2>
+        </header>
+        <div class="help-content">
+            <div class="help-step">
+                <div class="help-number">1</div>
+                <div class="help-text">
+                    <h3>Start Trip</h3>
+                    <p>Tap the green START TRIP button when you leave the depot</p>
+                </div>
+            </div>
+            <div class="help-step">
+                <div class="help-number">2</div>
+                <div class="help-text">
+                    <h3>At Each Stop</h3>
+                    <p>Tap the blue REACHED STOP button when you arrive at a bus stop</p>
+                </div>
+            </div>
+            <div class="help-step">
+                <div class="help-number">3</div>
+                <div class="help-text">
+                    <h3>End Trip</h3>
+                    <p>Tap the orange END TRIP button when you return to the depot</p>
+                </div>
+            </div>
+            <div class="help-info">
+                <h3>📵 Works Offline</h3>
+                <p>The app works without internet. Data syncs automatically when WiFi is available.</p>
+            </div>
+            <div class="help-info">
+                <h3>🔋 Battery Saving</h3>
+                <p>The app uses very little battery. You can use it all day.</p>
+            </div>
+            <div class="help-contact">
+                <h3>Need Help?</h3>
+                <p>Call Transport Office:</p>
+                <a href="tel:+919876543210" class="phone-link">+91 98765 43210</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Screen -->
+    <div class="screen" id="settingsScreen" style="display: none;">
+        <header class="screen-header">
+            <button class="back-btn" onclick="closeSettings()">←</button>
+            <h2>Settings</h2>
+        </header>
+        <div class="settings-content">
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-label">Vibration</span>
+                    <span class="setting-desc">Vibrate when button tapped</span>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="vibrationSetting" checked onchange="saveSetting('vibration')">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-label">Sound</span>
+                    <span class="setting-desc">Play sound on check-in</span>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="soundSetting" onchange="saveSetting('sound')">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-label">WiFi-only Sync</span>
+                    <span class="setting-desc">Only sync on WiFi (saves data)</span>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="wifiOnlySetting" checked onchange="saveSetting('wifiOnly')">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-label">High Brightness</span>
+                    <span class="setting-desc">Keep screen bright in sunlight</span>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="brightnessSetting" onchange="saveSetting('brightness')">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="data-section">
+                <h3>Data</h3>
+                <div class="data-item">
+                    <span>Pending uploads</span>
+                    <span id="pendingCount">0 trips</span>
+                </div>
+                <div class="data-item">
+                    <span>Storage used</span>
+                    <span id="storageUsed">2.1 MB</span>
+                </div>
+                <button class="btn-secondary" onclick="clearOldData()">Clear Old Data</button>
+            </div>
+            <div class="app-info">
+                <p>Bus Tracker Driver App</p>
+                <p>Version 1.0.0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Screen -->
+    <div class="screen" id="scheduleScreen" style="display: none;">
+        <header class="screen-header">
+            <button class="back-btn" onclick="closeSchedule()">←</button>
+            <h2>Today's Schedule</h2>
+        </header>
+        <div class="schedule-content">
+            <div class="schedule-date" id="scheduleDate">Monday, Feb 2, 2026</div>
+            <div class="schedule-list" id="scheduleList">
+                <div class="schedule-item completed">
+                    <div class="schedule-time">7:30 AM</div>
+                    <div class="schedule-info">
+                        <span class="schedule-route">Route 5 - Engineering Loop</span>
+                        <span class="schedule-status">✓ Completed</span>
+                    </div>
+                </div>
+                <div class="schedule-item current">
+                    <div class="schedule-time">1:00 PM</div>
+                    <div class="schedule-info">
+                        <span class="schedule-route">Route 5 - Engineering Loop</span>
+                        <span class="schedule-status">Upcoming</span>
+                    </div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-time">5:30 PM</div>
+                    <div class="schedule-info">
+                        <span class="schedule-route">Route 3 - Hostel Express</span>
+                        <span class="schedule-status">Scheduled</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3 id="confirmTitle">Confirm Action</h3>
+            <p id="confirmMessage">Are you sure?</p>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn-primary" id="confirmBtn" onclick="confirmAction()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

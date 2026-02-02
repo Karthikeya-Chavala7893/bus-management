@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E40AF">
+    <meta name="description" content="Bus Tracker Admin Dashboard">
+    <title>Admin Dashboard - Bus Tracker</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Offline Banner -->
+    <div class="offline-banner" id="offlineBanner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+                d="M1 1l22 22M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.58 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" />
+        </svg>
+        <span>Connection lost - Using cached data</span>
+        <button onclick="dismissOfflineBanner()" aria-label="Dismiss">×</button>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🚌</span>
+                    <span class="logo-text">Bus Tracker</span>
+                </div>
+                <button class="sidebar-toggle mobile-only" onclick="toggleSidebar()" aria-label="Close menu">×</button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="fleet" onclick="showPage('fleet')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="6" width="22" height="12" rx="2" />
+                        <path d="M1 10h22M6 18v2M18 18v2M6 6V4M18 6V4" />
+                    </svg>
+                    <span>Live Fleet</span>
+                    <span class="nav-badge" id="activeBusCount">5</span>
+                </a>
+                <a href="#" class="nav-item" data-page="routes" onclick="showPage('routes')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="10" r="3" />
+                        <path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8z" />
+                    </svg>
+                    <span>Routes</span>
+                </a>
+                <a href="#" class="nav-item" data-page="drivers" onclick="showPage('drivers')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <span>Drivers</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analytics" onclick="showPage('analytics')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 20V10M12 20V4M6 20v-6" />
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-page="notifications" onclick="showPage('notifications')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <span>Notifications</span>
+                    <span class="nav-badge danger" id="pendingNotifs">3</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings" onclick="showPage('settings')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin User</span>
+                        <span class="user-role" id="adminRole">Super Admin</span>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Open menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <span class="last-updated" id="lastUpdated">Updated just now</span>
+                    <button class="btn-icon" onclick="refreshData()" aria-label="Refresh">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M23 4v6h-6M1 20v-6h6" />
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                    </button>
+                    <div class="notifications-dropdown">
+                        <button class="btn-icon" onclick="toggleNotifications()" aria-label="Notifications">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" />
+                            </svg>
+                            <span class="notif-dot" id="headerNotifDot"></span>
+                        </button>
+                        <div class="dropdown-panel" id="notifDropdown">
+                            <div class="dropdown-header">
+                                <span>Notifications</span>
+                                <button class="text-btn" onclick="markAllRead()">Mark all read</button>
+                            </div>
+                            <div class="dropdown-list" id="notifList">
+                                <!-- Notifications inserted by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Page -->
+            <section class="page active" id="page-dashboard">
+                <!-- Metrics Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="1" y="6" width="22" height="12" rx="2" />
+                                <path d="M1 10h22" />
+                            </svg>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="totalBuses">12</span>
+                            <span class="metric-label">Total Buses</span>
+                        </div>
+                        <span class="metric-change positive">+2 this month</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22,4 12,14.01 9,11.01" />
+                            </svg>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="activeRoutes">5</span>
+                            <span class="metric-label">Active Routes</span>
+                        </div>
+                        <span class="metric-change neutral">No change</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="todayPassengers">1,245</span>
+                            <span class="metric-label">Passengers Today</span>
+                        </div>
+                        <span class="metric-change positive">+12%</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12,6 12,12 16,14" />
+                            </svg>
+                        </div>
+                        <div class="metric-content">
+                            <span class="metric-value" id="onTimeRate">94%</span>
+                            <span class="metric-label">On-Time Rate</span>
+                        </div>
+                        <span class="metric-change negative">-2%</span>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>Passenger Trends (Last 7 Days)</h3>
+                            <div class="card-actions">
+                                <select id="trendPeriod" onchange="updateTrendChart()">
+                                    <option value="7">Last 7 days</option>
+                                    <option value="30">Last 30 days</option>
+                                    <option value="90">Last 3 months</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="passengerChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>Route Distribution</h3>
+                        </div>
+                        <div class="chart-container chart-small">
+                            <canvas id="routeChart"></canvas>
+                        </div>
+                        <div class="chart-legend" id="routeLegend"></div>
+                    </div>
+                </div>
+
+                <!-- Live Fleet Status -->
+                <div class="data-card">
+                    <div class="card-header">
+                        <h3>Live Fleet Status</h3>
+                        <div class="card-actions">
+                            <span class="live-indicator">
+                                <span class="pulse"></span>
+                                Live
+                            </span>
+                            <a href="#" class="text-btn" onclick="showPage('fleet')">View all →</a>
+                        </div>
+                    </div>
+                    <div class="fleet-grid" id="fleetGrid">
+                        <!-- Fleet cards inserted by JS -->
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="data-card">
+                    <div class="card-header">
+                        <h3>Recent Activity</h3>
+                        <a href="#" class="text-btn">View all →</a>
+                    </div>
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items inserted by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fleet Page -->
+            <section class="page" id="page-fleet">
+                <div class="page-actions">
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                        <input type="text" placeholder="Search buses..." id="fleetSearch" onkeyup="filterFleet()">
+                    </div>
+                    <div class="filter-group">
+                        <select id="fleetStatusFilter" onchange="filterFleet()">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="idle">Idle</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="fleet-map-container">
+                    <div class="map-placeholder" id="fleetMap">
+                        <div class="map-mock">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF"
+                                stroke-width="1.5">
+                                <circle cx="12" cy="10" r="3" />
+                                <path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8z" />
+                            </svg>
+                            <p>Map view would display here</p>
+                            <small>(Requires map integration)</small>
+                        </div>
+                    </div>
+                    <div class="fleet-list-panel">
+                        <h3>All Buses <span id="busCount">(12)</span></h3>
+                        <div class="fleet-list" id="fleetList">
+                            <!-- Bus items inserted by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Routes Page -->
+            <section class="page" id="page-routes">
+                <div class="page-actions">
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                        <input type="text" placeholder="Search routes..." id="routeSearch" onkeyup="filterRoutes()">
+                    </div>
+                    <button class="btn-primary" onclick="openRouteModal()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add Route
+                    </button>
+                </div>
+
+                <div class="data-card">
+                    <table class="data-table" id="routesTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('routes', 'id')">Route ID <span class="sort-icon">↕</span></th>
+                                <th onclick="sortTable('routes', 'name')">Route Name <span class="sort-icon">↕</span>
+                                </th>
+                                <th>Stops</th>
+                                <th>Assigned Bus</th>
+                                <th onclick="sortTable('routes', 'status')">Status <span class="sort-icon">↕</span></th>
+                                <th>Schedule</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="routesBody">
+                            <!-- Route rows inserted by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Drivers Page -->
+            <section class="page" id="page-drivers">
+                <div class="page-actions">
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                        <input type="text" placeholder="Search drivers..." id="driverSearch" onkeyup="filterDrivers()">
+                    </div>
+                    <button class="btn-primary" onclick="openDriverModal()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add Driver
+                    </button>
+                </div>
+
+                <div class="data-card">
+                    <table class="data-table" id="driversTable">
+                        <thead>
+                            <tr>
+                                <th>Driver</th>
+                                <th onclick="sortTable('drivers', 'id')">ID <span class="sort-icon">↕</span></th>
+                                <th>Phone</th>
+                                <th>Assigned Bus</th>
+                                <th onclick="sortTable('drivers', 'status')">Status <span class="sort-icon">↕</span>
+                                </th>
+                                <th>Today's Trips</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="driversBody">
+                            <!-- Driver rows inserted by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Analytics Page -->
+            <section class="page" id="page-analytics">
+                <div class="page-actions">
+                    <div class="filter-group">
+                        <label>Date Range:</label>
+                        <input type="date" id="analyticsStart" onchange="updateAnalytics()">
+                        <span>to</span>
+                        <input type="date" id="analyticsEnd" onchange="updateAnalytics()">
+                    </div>
+                    <button class="btn-secondary" onclick="exportReport()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                        </svg>
+                        Export Report
+                    </button>
+                </div>
+
+                <!-- Analytics Metrics -->
+                <div class="metrics-grid four-cols">
+                    <div class="metric-card compact">
+                        <span class="metric-label">Total Trips</span>
+                        <span class="metric-value" id="analyticsTotalTrips">2,847</span>
+                    </div>
+                    <div class="metric-card compact">
+                        <span class="metric-label">Avg. Daily Passengers</span>
+                        <span class="metric-value" id="analyticsAvgPassengers">1,156</span>
+                    </div>
+                    <div class="metric-card compact">
+                        <span class="metric-label">Total Distance (km)</span>
+                        <span class="metric-value" id="analyticsTotalDistance">15,420</span>
+                    </div>
+                    <div class="metric-card compact">
+                        <span class="metric-label">Avg. On-Time Rate</span>
+                        <span class="metric-value" id="analyticsOnTime">92.3%</span>
+                    </div>
+                </div>
+
+                <!-- Analytics Charts -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>Daily Ridership</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="ridershipChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>Peak Hours</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="peakHoursChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Route Performance Table -->
+                <div class="data-card">
+                    <div class="card-header">
+                        <h3>Route Performance</h3>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Route</th>
+                                <th>Total Trips</th>
+                                <th>Passengers</th>
+                                <th>On-Time %</th>
+                                <th>Avg. Delay</th>
+                                <th>Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody id="routePerformanceBody">
+                            <!-- Route performance rows inserted by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Notifications Page -->
+            <section class="page" id="page-notifications">
+                <div class="page-actions">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" onclick="filterNotifications('all')">All</button>
+                        <button class="filter-tab" onclick="filterNotifications('alerts')">Alerts</button>
+                        <button class="filter-tab" onclick="filterNotifications('system')">System</button>
+                        <button class="filter-tab" onclick="filterNotifications('sent')">Sent</button>
+                    </div>
+                    <button class="btn-primary" onclick="openBroadcastModal()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                        </svg>
+                        Send Broadcast
+                    </button>
+                </div>
+
+                <div class="notifications-list" id="notificationsList">
+                    <!-- Notification items inserted by JS -->
+                </div>
+            </section>
+
+            <!-- Settings Page -->
+            <section class="page" id="page-settings">
+                <div class="settings-grid">
+                    <!-- General Settings -->
+                    <div class="settings-card">
+                        <h3>General Settings</h3>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">College Name</span>
+                                <span class="setting-desc">Displayed in app headers</span>
+                            </div>
+                            <input type="text" id="collegeName" value="Bhaskar Engineering College">
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Operating Hours</span>
+                                <span class="setting-desc">When buses run</span>
+                            </div>
+                            <div class="time-range">
+                                <input type="time" id="opStart" value="07:00">
+                                <span>to</span>
+                                <input type="time" id="opEnd" value="21:00">
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Auto-refresh Interval</span>
+                                <span class="setting-desc">Dashboard data refresh</span>
+                            </div>
+                            <select id="refreshInterval">
+                                <option value="10">Every 10 seconds</option>
+                                <option value="30" selected>Every 30 seconds</option>
+                                <option value="60">Every minute</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="settings-card">
+                        <h3>Notification Settings</h3>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Default Alert Timing</span>
+                                <span class="setting-desc">Minutes before arrival</span>
+                            </div>
+                            <select id="alertTiming">
+                                <option value="5">5 minutes</option>
+                                <option value="10" selected>10 minutes</option>
+                                <option value="15">15 minutes</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">SMS Notifications</span>
+                                <span class="setting-desc">Send SMS alerts to students</span>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="smsEnabled" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Delay Threshold</span>
+                                <span class="setting-desc">Minutes before marking delayed</span>
+                            </div>
+                            <select id="delayThreshold">
+                                <option value="3">3 minutes</option>
+                                <option value="5" selected>5 minutes</option>
+                                <option value="10">10 minutes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- User Management -->
+                    <div class="settings-card full-width">
+                        <div class="card-header">
+                            <h3>Admin Users</h3>
+                            <button class="btn-secondary" onclick="openUserModal()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Add User
+                            </button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Last Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersBody">
+                                <!-- User rows inserted by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Data Management -->
+                    <div class="settings-card">
+                        <h3>Data Management</h3>
+                        <div class="setting-actions">
+                            <button class="btn-secondary" onclick="exportAllData()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                </svg>
+                                Export All Data
+                            </button>
+                            <button class="btn-secondary" onclick="importData()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                                </svg>
+                                Import Data
+                            </button>
+                            <button class="btn-danger" onclick="clearCache()">Clear Cache</button>
+                        </div>
+                        <div class="data-info">
+                            <div class="info-item">
+                                <span>Database size:</span>
+                                <span id="dbSize">24.5 MB</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Last backup:</span>
+                                <span id="lastBackup">2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About -->
+                    <div class="settings-card">
+                        <h3>About</h3>
+                        <div class="about-info">
+                            <p><strong>Bus Tracker Admin</strong></p>
+                            <p>Version 1.0.0</p>
+                            <p class="text-muted">College Bus Management System</p>
+                            <a href="#" class="text-btn">View Documentation</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-footer">
+                    <button class="btn-primary" onclick="saveSettings()">Save Changes</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Route Modal -->
+    <div class="modal" id="routeModal">
+        <div class="modal-overlay" onclick="closeModal('routeModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="routeModalTitle">Add New Route</h3>
+                <button class="modal-close" onclick="closeModal('routeModal')">×</button>
+            </div>
+            <form class="modal-form" id="routeForm" onsubmit="saveRoute(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Route ID <span class="required">*</span></label>
+                        <input type="text" id="routeId" required placeholder="e.g., R001">
+                    </div>
+                    <div class="form-group">
+                        <label>Route Name <span class="required">*</span></label>
+                        <input type="text" id="routeName" required placeholder="e.g., Engineering Loop">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Stops (comma separated) <span class="required">*</span></label>
+                    <textarea id="routeStops" required
+                        placeholder="Main Gate, Library, Science Block, Hostel"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Operating Days</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="days" value="mon" checked> Mon</label>
+                            <label><input type="checkbox" name="days" value="tue" checked> Tue</label>
+                            <label><input type="checkbox" name="days" value="wed" checked> Wed</label>
+                            <label><input type="checkbox" name="days" value="thu" checked> Thu</label>
+                            <label><input type="checkbox" name="days" value="fri" checked> Fri</label>
+                            <label><input type="checkbox" name="days" value="sat"> Sat</label>
+                            <label><input type="checkbox" name="days" value="sun"> Sun</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Start Time</label>
+                        <input type="time" id="routeStartTime" value="07:30">
+                    </div>
+                    <div class="form-group">
+                        <label>End Time</label>
+                        <input type="time" id="routeEndTime" value="18:00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="routeStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('routeModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Route</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Driver Modal -->
+    <div class="modal" id="driverModal">
+        <div class="modal-overlay" onclick="closeModal('driverModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="driverModalTitle">Add New Driver</h3>
+                <button class="modal-close" onclick="closeModal('driverModal')">×</button>
+            </div>
+            <form class="modal-form" id="driverForm" onsubmit="saveDriver(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="driverName" required placeholder="e.g., Ravi Kumar">
+                    </div>
+                    <div class="form-group">
+                        <label>Driver ID <span class="required">*</span></label>
+                        <input type="text" id="driverIdInput" required placeholder="e.g., DRV001">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="driverPhone" required placeholder="+91 98765 43210">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="driverEmail" placeholder="driver@email.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Assigned Bus</label>
+                        <select id="driverBus">
+                            <option value="">Not Assigned</option>
+                            <option value="101">Bus 101</option>
+                            <option value="102">Bus 102</option>
+                            <option value="103">Bus 103</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>License Number</label>
+                        <input type="text" id="driverLicense" placeholder="DL-12345678">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="driverStatus">
+                        <option value="active">Active</option>
+                        <option value="off-duty">Off Duty</option>
+                        <option value="on-leave">On Leave</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('driverModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Driver</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Broadcast Modal -->
+    <div class="modal" id="broadcastModal">
+        <div class="modal-overlay" onclick="closeModal('broadcastModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Send Broadcast Message</h3>
+                <button class="modal-close" onclick="closeModal('broadcastModal')">×</button>
+            </div>
+            <form class="modal-form" id="broadcastForm" onsubmit="sendBroadcast(event)">
+                <div class="form-group">
+                    <label>Message Type</label>
+                    <select id="broadcastType">
+                        <option value="info">Information</option>
+                        <option value="warning">Warning</option>
+                        <option value="delay">Delay Alert</option>
+                        <option value="emergency">Emergency</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Target Audience</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="audience" value="all" checked> All Students</label>
+                        <label><input type="checkbox" name="audience" value="route"> Specific Route</label>
+                    </div>
+                </div>
+                <div class="form-group" id="routeSelectGroup" style="display: none;">
+                    <label>Select Route</label>
+                    <select id="broadcastRoute">
+                        <option value="route5">Route 5 - Engineering Loop</option>
+                        <option value="route3">Route 3 - Hostel Express</option>
+                        <option value="route7">Route 7 - City Center</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message <span class="required">*</span></label>
+                    <textarea id="broadcastMessage" required placeholder="Enter your message here..."
+                        rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="sendSms">
+                        Also send via SMS (uses SMS credits)
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('broadcastModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-overlay" onclick="closeModal('confirmModal')"></div>
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirm Action</h3>
+                <button class="modal-close" onclick="closeModal('confirmModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('confirmModal')">Cancel</button>
+                <button class="btn-danger" id="confirmBtn" onclick="confirmAction()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon" id="toastIcon"></div>
+        <span class="toast-message" id="toastMessage"></span>
+        <button class="toast-close" onclick="hideToast()">×</button>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <span>Loading...</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

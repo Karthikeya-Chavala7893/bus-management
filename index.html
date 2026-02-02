@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="College Bus Tracking System - Track your bus, get SMS alerts, works offline">
+    <meta name="theme-color" content="#2563EB">
+    <title>BusTrack - College Bus Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <!-- View: Landing -->
+    <section class="view active" id="view-landing">
+        <!-- Navigation -->
+        <nav class="landing-nav">
+            <div class="landing-nav-container">
+                <a href="#" class="landing-logo">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="6" width="18" height="12" rx="2" />
+                        <circle cx="7" cy="18" r="2" />
+                        <circle cx="17" cy="18" r="2" />
+                        <path d="M5 6V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span>BusTrack</span>
+                </a>
+                <div class="landing-nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How it Works</a>
+                    <button class="btn btn-nav" onclick="openLoginModal()">Login</button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="landing-main">
+            <!-- Hero Section -->
+            <section class="landing-hero">
+                <div class="landing-hero-content">
+                    <span class="landing-hero-badge">🚌 Smart Campus Transport</span>
+                    <h1>Track Your <span class="gradient-text">College Bus</span> in Real-Time</h1>
+                    <p class="landing-hero-subtitle">AI-powered predictions, SMS alerts, and offline access. Never miss
+                        your bus again.</p>
+
+                    <div class="landing-hero-buttons">
+                        <button class="btn btn-primary btn-large" onclick="openLoginModal()">
+                            Get Started
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                        <a href="#how-it-works" class="btn btn-outline btn-large">Learn More</a>
+                    </div>
+
+                    <div class="landing-hero-stats">
+                        <div class="landing-hero-stat">
+                            <strong>2,500+</strong>
+                            <span>Active Students</span>
+                        </div>
+                        <div class="landing-hero-stat-divider"></div>
+                        <div class="landing-hero-stat">
+                            <strong>83%</strong>
+                            <span>Accuracy Rate</span>
+                        </div>
+                        <div class="landing-hero-stat-divider"></div>
+                        <div class="landing-hero-stat">
+                            <strong>15</strong>
+                            <span>Campus Routes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Illustration -->
+                <div class="landing-hero-visual">
+                    <div class="landing-bus-card">
+                        <div class="landing-bus-card-header">
+                            <span class="live-dot"></span>
+                            <span>Route 5 - Engineering Block</span>
+                        </div>
+                        <div class="landing-bus-card-body">
+                            <div class="landing-bus-eta">
+                                <span class="eta-label">Arriving in</span>
+                                <span class="eta-time">3 min</span>
+                            </div>
+                            <div class="landing-bus-stops">
+                                <div class="stop completed"><span class="stop-dot"></span> Main Gate</div>
+                                <div class="stop completed"><span class="stop-dot"></span> Library</div>
+                                <div class="stop active"><span class="stop-dot"></span> Science Block</div>
+                                <div class="stop"><span class="stop-dot"></span> Engineering Block</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="landing-section" id="features">
+                <div class="landing-section-header">
+                    <span class="landing-section-badge">Features</span>
+                    <h2>Everything You Need</h2>
+                    <p>Designed for students, drivers, and administrators</p>
+                </div>
+
+                <div class="landing-features-grid">
+                    <div class="landing-feature-card">
+                        <div class="landing-feature-icon landing-feature-icon-blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                        </div>
+                        <h3>Live Tracking</h3>
+                        <p>Real-time bus locations updated as drivers check in at each stop</p>
+                    </div>
+
+                    <div class="landing-feature-card">
+                        <div class="landing-feature-icon landing-feature-icon-green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                        </div>
+                        <h3>SMS Alerts</h3>
+                        <p>Get notifications on any phone - no smartphone or internet required</p>
+                    </div>
+
+                    <div class="landing-feature-card">
+                        <div class="landing-feature-icon landing-feature-icon-purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                            </svg>
+                        </div>
+                        <h3>AI Predictions</h3>
+                        <p>Machine learning analyzes patterns to predict accurate arrival times</p>
+                    </div>
+
+                    <div class="landing-feature-card">
+                        <div class="landing-feature-icon landing-feature-icon-orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                                <line x1="12" y1="2" x2="12" y2="12" />
+                            </svg>
+                        </div>
+                        <h3>Works Offline</h3>
+                        <p>Access schedules and cached data even without internet connection</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Role Cards Section -->
+            <section class="landing-section landing-section-dark">
+                <div class="landing-section-header">
+                    <span class="landing-section-badge">Get Started</span>
+                    <h2>Choose Your Role</h2>
+                    <p>Select how you'll use the bus tracking system</p>
+                </div>
+
+                <div class="landing-role-cards">
+                    <!-- Student Card -->
+                    <div class="landing-role-card landing-role-card-student">
+                        <div class="landing-role-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                        </div>
+                        <h3>Student</h3>
+                        <p class="landing-role-desc">Track buses and receive alerts</p>
+                        <ul class="landing-role-features">
+                            <li>✓ Real-time arrival times</li>
+                            <li>✓ SMS & push notifications</li>
+                            <li>✓ Offline schedule access</li>
+                        </ul>
+                        <button class="btn btn-role btn-student" onclick="loginAs('student')">
+                            Login as Student →
+                        </button>
+                    </div>
+
+                    <!-- Driver Card -->
+                    <div class="landing-role-card landing-role-card-driver">
+                        <div class="landing-role-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <h3>Driver</h3>
+                        <p class="landing-role-desc">Simple one-tap check-ins</p>
+                        <ul class="landing-role-features">
+                            <li>✓ Easy stop check-ins</li>
+                            <li>✓ Works 100% offline</li>
+                            <li>✓ Auto-sync when online</li>
+                        </ul>
+                        <button class="btn btn-role btn-driver" onclick="loginAs('driver')">
+                            Login as Driver →
+                        </button>
+                    </div>
+
+                    <!-- Admin Card -->
+                    <div class="landing-role-card landing-role-card-admin">
+                        <div class="landing-role-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <path d="M3 9h18M9 21V9" />
+                            </svg>
+                        </div>
+                        <h3>Admin</h3>
+                        <p class="landing-role-desc">Fleet monitoring & analytics</p>
+                        <ul class="landing-role-features">
+                            <li>✓ Real-time dashboard</li>
+                            <li>✓ Route analytics</li>
+                            <li>✓ Schedule management</li>
+                        </ul>
+                        <button class="btn btn-role btn-admin" onclick="loginAs('admin')">
+                            Login as Admin →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works -->
+            <section class="landing-section" id="how-it-works">
+                <div class="landing-section-header">
+                    <span class="landing-section-badge">Simple Process</span>
+                    <h2>How It Works</h2>
+                    <p>Three easy steps to never miss your bus</p>
+                </div>
+
+                <div class="landing-steps-container">
+                    <div class="landing-step-item">
+                        <div class="landing-step-number">1</div>
+                        <div class="landing-step-content">
+                            <h3>Driver Checks In</h3>
+                            <p>At each bus stop, the driver taps a single button to record their arrival time.</p>
+                        </div>
+                    </div>
+
+                    <div class="landing-step-connector"></div>
+
+                    <div class="landing-step-item">
+                        <div class="landing-step-number">2</div>
+                        <div class="landing-step-content">
+                            <h3>AI Predicts Arrival</h3>
+                            <p>Our system analyzes patterns and calculates accurate arrival times for each stop.</p>
+                        </div>
+                    </div>
+
+                    <div class="landing-step-connector"></div>
+
+                    <div class="landing-step-item">
+                        <div class="landing-step-number">3</div>
+                        <div class="landing-step-content">
+                            <h3>You Get Notified</h3>
+                            <p>Receive real-time updates via the web portal or SMS on any mobile phone.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics -->
+            <section class="landing-section landing-section-gradient">
+                <div class="landing-stats-grid">
+                    <div class="landing-stat-item">
+                        <div class="landing-stat-value">2,500+</div>
+                        <div class="landing-stat-label">Students Served</div>
+                    </div>
+                    <div class="landing-stat-item">
+                        <div class="landing-stat-value">15</div>
+                        <div class="landing-stat-label">Active Routes</div>
+                    </div>
+                    <div class="landing-stat-item">
+                        <div class="landing-stat-value">83%</div>
+                        <div class="landing-stat-label">Prediction Accuracy</div>
+                    </div>
+                    <div class="landing-stat-item">
+                        <div class="landing-stat-value">500+</div>
+                        <div class="landing-stat-label">Daily Trips</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            <div class="landing-footer-content">
+                <div class="landing-footer-brand">
+                    <div class="landing-logo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="6" width="18" height="12" rx="2" />
+                            <circle cx="7" cy="18" r="2" />
+                            <circle cx="17" cy="18" r="2" />
+                        </svg>
+                        <span>BusTrack</span>
+                    </div>
+                    <p>XYZ Engineering College</p>
+                </div>
+                <div class="landing-footer-links">
+                    <a href="#help">Help & Support</a>
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#contact">Contact Us</a>
+                </div>
+            </div>
+            <div class="landing-footer-bottom">
+                <p>© 2026 College Bus Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </section>
+
+    <!-- View: Student Portal -->
+    <section class="view" id="view-student">
+        <!-- Header -->
+        <header class="student-header">
+            <div class="student-header-left">
+                <button class="icon-btn" onclick="navigateTo('landing')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <div class="student-logo-text">
+                    <span class="student-logo-main">Bus Tracker</span>
+                    <span class="student-logo-sub">Student Portal</span>
+                </div>
+            </div>
+            <div class="student-header-right">
+                <button class="icon-btn" onclick="showStudentNotifications()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <span class="notif-badge">3</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="student-main">
+            <!-- Quick Status -->
+            <div class="student-status-card">
+                <div class="student-status-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                </div>
+                <div class="student-status-content">
+                    <span class="student-status-label">Next bus arriving</span>
+                    <span class="student-status-value">Route 5 in 8 mins</span>
+                    <span class="student-status-meta">at Stop 7 - Engineering Block</span>
+                </div>
+            </div>
+
+            <!-- My Routes -->
+            <div class="student-page-header">
+                <h1>My Routes</h1>
+                <p>Your saved bus routes</p>
+            </div>
+
+            <div class="student-route-cards">
+                <div class="student-route-card">
+                    <div class="student-route-header">
+                        <span class="student-route-badge student-route-badge-blue">5</span>
+                        <div class="student-route-info">
+                            <span class="student-route-name">Engineering Loop</span>
+                            <span class="student-route-status status-ontime">
+                                <span class="status-dot green"></span> On Time
+                            </span>
+                        </div>
+                    </div>
+                    <div class="student-route-details">
+                        <div class="student-route-detail">
+                            <span class="detail-label">Current Position</span>
+                            <span class="detail-value">At Stop 4 of 7</span>
+                        </div>
+                        <div class="student-route-detail">
+                            <span class="detail-label">Your Stop ETA</span>
+                            <span class="detail-value highlight">8 minutes</span>
+                        </div>
+                    </div>
+                    <div class="student-capacity-bar">
+                        <div class="student-capacity-fill" style="width: 65%"></div>
+                        <span class="student-capacity-text">Normal capacity</span>
+                    </div>
+                </div>
+
+                <div class="student-route-card">
+                    <div class="student-route-header">
+                        <span class="student-route-badge student-route-badge-green">3</span>
+                        <div class="student-route-info">
+                            <span class="student-route-name">Hostel Express</span>
+                            <span class="student-route-status status-delayed">
+                                <span class="status-dot yellow"></span> Delayed 5 mins
+                            </span>
+                        </div>
+                    </div>
+                    <div class="student-route-details">
+                        <div class="student-route-detail">
+                            <span class="detail-label">Current Position</span>
+                            <span class="detail-value">At Stop 2 of 6</span>
+                        </div>
+                        <div class="student-route-detail">
+                            <span class="detail-label">Your Stop ETA</span>
+                            <span class="detail-value">18 minutes</span>
+                        </div>
+                    </div>
+                    <div class="student-capacity-bar student-capacity-warning">
+                        <div class="student-capacity-fill" style="width: 82%"></div>
+                        <span class="student-capacity-text">Filling up</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <nav class="student-bottom-nav">
+                <button class="student-nav-item active">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    <span>Home</span>
+                </button>
+                <button class="student-nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="6" width="18" height="12" rx="2" />
+                        <circle cx="7" cy="18" r="2" />
+                        <circle cx="17" cy="18" r="2" />
+                    </svg>
+                    <span>Routes</span>
+                </button>
+                <button class="student-nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <span>Alerts</span>
+                </button>
+                <button class="student-nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </svg>
+                    <span>Settings</span>
+                </button>
+            </nav>
+        </main>
+    </section>
+
+    <!-- View: Driver Portal -->
+    <section class="view" id="view-driver">
+        <!-- Header -->
+        <header class="driver-header">
+            <div class="driver-header-left">
+                <button class="driver-menu-btn" onclick="toggleDriverMenu()">☰</button>
+                <div class="driver-header-info">
+                    <span class="driver-name">Ravi Kumar</span>
+                    <span class="driver-bus-number">Bus 101</span>
+                </div>
+            </div>
+            <div class="driver-header-right">
+                <div class="driver-sync-status">
+                    <span class="driver-sync-icon online">☁</span>
+                    <span class="driver-sync-text">Online</span>
+                </div>
+                <span class="driver-current-time" id="driverCurrentTime">8:45 AM</span>
+            </div>
+        </header>
+
+        <!-- Menu Sidebar -->
+        <div class="driver-menu-overlay" id="driverMenuOverlay" onclick="toggleDriverMenu()"></div>
+        <nav class="driver-menu-sidebar" id="driverMenuSidebar">
+            <div class="driver-menu-header">
+                <span class="driver-menu-title">Menu</span>
+                <button class="driver-menu-close" onclick="toggleDriverMenu()">×</button>
+            </div>
+            <ul class="driver-menu-list">
+                <li onclick="navigateTo('landing')">
+                    <span class="driver-menu-icon">🏠</span>
+                    <span>Back to Home</span>
+                </li>
+                <li>
+                    <span class="driver-menu-icon">📅</span>
+                    <span>Today's Schedule</span>
+                </li>
+                <li>
+                    <span class="driver-menu-icon">📋</span>
+                    <span>Trip History</span>
+                </li>
+                <li>
+                    <span class="driver-menu-icon">⚙️</span>
+                    <span>Settings</span>
+                </li>
+                <li class="driver-menu-emergency">
+                    <span class="driver-menu-icon">🚨</span>
+                    <span>Emergency</span>
+                </li>
+                <li onclick="logout()">
+                    <span class="driver-menu-icon">🚪</span>
+                    <span>Logout</span>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="driver-main">
+            <!-- Status Card -->
+            <div class="driver-status-card">
+                <div class="driver-status-icon">🚌</div>
+                <div class="driver-status-text">Ready to start Route 5</div>
+                <div class="driver-status-sub">Engineering Loop • 7 stops</div>
+            </div>
+
+            <!-- Main Action Button -->
+            <button class="driver-action-button" onclick="handleDriverAction()">
+                <span class="driver-action-icon">▶</span>
+                <span class="driver-action-text">START TRIP</span>
+            </button>
+
+            <!-- Stop List -->
+            <div class="driver-stop-list-container">
+                <div class="driver-stop-list-header">
+                    <span>Route Stops</span>
+                    <span class="driver-stop-progress">0/7</span>
+                </div>
+                <div class="driver-stop-list">
+                    <div class="driver-stop-item">
+                        <span class="driver-stop-number">1</span>
+                        <span class="driver-stop-name">Main Gate</span>
+                    </div>
+                    <div class="driver-stop-item">
+                        <span class="driver-stop-number">2</span>
+                        <span class="driver-stop-name">Library</span>
+                    </div>
+                    <div class="driver-stop-item">
+                        <span class="driver-stop-number">3</span>
+                        <span class="driver-stop-name">Science Block</span>
+                    </div>
+                    <div class="driver-stop-item">
+                        <span class="driver-stop-number">4</span>
+                        <span class="driver-stop-name">Medical Center</span>
+                    </div>
+                    <div class="driver-stop-item">
+                        <span class="driver-stop-number">5</span>
+                        <span class="driver-stop-name">Admin Block</span>
+                    </div>
+                    <div class="driver-stop-item">
+                        <span class="driver-stop-number">6</span>
+                        <span class="driver-stop-name">Engineering Block</span>
+                    </div>
+                    <div class="driver-stop-item">
+                        <span class="driver-stop-number">7</span>
+                        <span class="driver-stop-name">Hostel Gate</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!-- View: Admin Portal -->
+    <section class="view" id="view-admin">
+        <div class="admin-app-container">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar" id="adminSidebar">
+                <div class="admin-sidebar-header">
+                    <div class="admin-logo">
+                        <span class="admin-logo-icon">🚌</span>
+                        <span class="admin-logo-text">Bus Tracker</span>
+                    </div>
+                </div>
+
+                <nav class="admin-sidebar-nav">
+                    <a href="#" class="admin-nav-item active" data-page="dashboard"
+                        onclick="showAdminPage('dashboard')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="admin-nav-item" data-page="fleet" onclick="showAdminPage('fleet')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="1" y="6" width="22" height="12" rx="2" />
+                            <path d="M1 10h22M6 18v2M18 18v2" />
+                        </svg>
+                        <span>Live Fleet</span>
+                        <span class="admin-nav-badge">5</span>
+                    </a>
+                    <a href="#" class="admin-nav-item" data-page="routes" onclick="showAdminPage('routes')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="10" r="3" />
+                            <path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8z" />
+                        </svg>
+                        <span>Routes</span>
+                    </a>
+                    <a href="#" class="admin-nav-item" data-page="analytics" onclick="showAdminPage('analytics')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 20V10M12 20V4M6 20v-6" />
+                        </svg>
+                        <span>Analytics</span>
+                    </a>
+                </nav>
+
+                <div class="admin-sidebar-footer">
+                    <div class="admin-user-info">
+                        <div class="admin-user-avatar">A</div>
+                        <div class="admin-user-details">
+                            <span class="admin-user-name">Admin User</span>
+                            <span class="admin-user-role">Super Admin</span>
+                        </div>
+                    </div>
+                    <button class="admin-btn-logout" onclick="logout()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                        </svg>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="admin-main-content">
+                <!-- Header -->
+                <header class="admin-main-header">
+                    <div class="admin-header-left">
+                        <button class="admin-menu-toggle" onclick="toggleAdminSidebar()">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="3" y1="12" x2="21" y2="12" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <line x1="3" y1="18" x2="21" y2="18" />
+                            </svg>
+                        </button>
+                        <button class="admin-back-btn" onclick="navigateTo('landing')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                            </svg>
+                            <span>Back to Home</span>
+                        </button>
+                        <h1 class="admin-page-title">Dashboard</h1>
+                    </div>
+                    <div class="admin-header-right">
+                        <span class="admin-last-updated">Updated just now</span>
+                        <button class="admin-btn-icon" onclick="refreshAdminData()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M23 4v6h-6M1 20v-6h6" />
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                            </svg>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Dashboard Page -->
+                <section class="admin-page active" id="admin-page-dashboard">
+                    <!-- Metrics -->
+                    <div class="admin-metrics-grid">
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon blue">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="1" y="6" width="22" height="12" rx="2" />
+                                    <path d="M1 10h22" />
+                                </svg>
+                            </div>
+                            <div class="admin-metric-content">
+                                <span class="admin-metric-value">12</span>
+                                <span class="admin-metric-label">Total Buses</span>
+                            </div>
+                            <span class="admin-metric-change positive">+2 this month</span>
+                        </div>
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon green">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22,4 12,14.01 9,11.01" />
+                                </svg>
+                            </div>
+                            <div class="admin-metric-content">
+                                <span class="admin-metric-value">5</span>
+                                <span class="admin-metric-label">Active Routes</span>
+                            </div>
+                            <span class="admin-metric-change neutral">No change</span>
+                        </div>
+                        <div class="admin-metric-card" id="bookingsMetricCard">
+                            <div class="admin-metric-icon purple">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                    <polyline points="10 9 9 9 8 9" />
+                                </svg>
+                            </div>
+                            <div class="admin-metric-content">
+                                <span class="admin-metric-value" id="adminBookingCount">0</span>
+                                <span class="admin-metric-label">Bookings Today</span>
+                            </div>
+                            <span class="admin-metric-change positive" id="bookingChange">Live updates</span>
+                        </div>
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon orange">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                            </div>
+                            <div class="admin-metric-content">
+                                <span class="admin-metric-value">94%</span>
+                                <span class="admin-metric-label">On-Time Rate</span>
+                            </div>
+                            <span class="admin-metric-change negative">-2%</span>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="admin-charts-row">
+                        <div class="admin-chart-card">
+                            <div class="admin-card-header">
+                                <h3>Passenger Trends (Last 7 Days)</h3>
+                            </div>
+                            <div class="admin-chart-container">
+                                <canvas id="adminPassengerChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="admin-chart-card">
+                            <div class="admin-card-header">
+                                <h3>Route Distribution</h3>
+                            </div>
+                            <div class="admin-chart-container admin-chart-small">
+                                <canvas id="adminRouteChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Fleet Status -->
+                    <div class="admin-data-card">
+                        <div class="admin-card-header">
+                            <h3>Live Fleet Status</h3>
+                            <span class="admin-live-indicator">
+                                <span class="pulse"></span>
+                                Live
+                            </span>
+                        </div>
+                        <div class="admin-fleet-grid">
+                            <div class="admin-fleet-card active">
+                                <div class="admin-fleet-card-header">
+                                    <span class="admin-fleet-bus-number">Bus 101</span>
+                                    <span class="admin-fleet-status active">Active</span>
+                                </div>
+                                <div class="admin-fleet-route">Route 5 - Engineering Loop</div>
+                                <div class="admin-fleet-driver">Driver: Ravi Kumar</div>
+                                <div class="admin-fleet-progress">
+                                    <div class="admin-fleet-progress-bar" style="width: 60%"></div>
+                                </div>
+                                <div class="admin-fleet-meta">Stop 4 of 7 • 38 passengers</div>
+                            </div>
+                            <div class="admin-fleet-card active">
+                                <div class="admin-fleet-card-header">
+                                    <span class="admin-fleet-bus-number">Bus 102</span>
+                                    <span class="admin-fleet-status active">Active</span>
+                                </div>
+                                <div class="admin-fleet-route">Route 3 - Hostel Express</div>
+                                <div class="admin-fleet-driver">Driver: Suresh M.</div>
+                                <div class="admin-fleet-progress">
+                                    <div class="admin-fleet-progress-bar" style="width: 30%"></div>
+                                </div>
+                                <div class="admin-fleet-meta">Stop 2 of 6 • 42 passengers</div>
+                            </div>
+                            <div class="admin-fleet-card delayed">
+                                <div class="admin-fleet-card-header">
+                                    <span class="admin-fleet-bus-number">Bus 103</span>
+                                    <span class="admin-fleet-status delayed">Delayed</span>
+                                </div>
+                                <div class="admin-fleet-route">Route 1 - Main Campus</div>
+                                <div class="admin-fleet-driver">Driver: Anand P.</div>
+                                <div class="admin-fleet-progress">
+                                    <div class="admin-fleet-progress-bar delayed" style="width: 45%"></div>
+                                </div>
+                                <div class="admin-fleet-meta">Stop 3 of 8 • 5 min delay</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fleet Page -->
+                <section class="admin-page" id="admin-page-fleet">
+                    <div class="admin-page-actions">
+                        <div class="admin-search-box">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="M21 21l-4.35-4.35" />
+                            </svg>
+                            <input type="text" placeholder="Search buses...">
+                        </div>
+                    </div>
+                    <div class="admin-data-card">
+                        <table class="admin-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Bus Number</th>
+                                    <th>Route</th>
+                                    <th>Driver</th>
+                                    <th>Status</th>
+                                    <th>Last Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Bus 101</td>
+                                    <td>Route 5 - Engineering Loop</td>
+                                    <td>Ravi Kumar</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>2 min ago</td>
+                                </tr>
+                                <tr>
+                                    <td>Bus 102</td>
+                                    <td>Route 3 - Hostel Express</td>
+                                    <td>Suresh M.</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>5 min ago</td>
+                                </tr>
+                                <tr>
+                                    <td>Bus 103</td>
+                                    <td>Route 1 - Main Campus</td>
+                                    <td>Anand P.</td>
+                                    <td><span class="status-badge delayed">Delayed</span></td>
+                                    <td>1 min ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Routes Page -->
+                <section class="admin-page" id="admin-page-routes">
+                    <div class="admin-page-actions">
+                        <div class="admin-search-box">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="M21 21l-4.35-4.35" />
+                            </svg>
+                            <input type="text" placeholder="Search routes...">
+                        </div>
+                        <button class="admin-btn-primary">+ Add Route</button>
+                    </div>
+                    <div class="admin-data-card">
+                        <table class="admin-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Route ID</th>
+                                    <th>Route Name</th>
+                                    <th>Stops</th>
+                                    <th>Schedule</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>R001</td>
+                                    <td>Engineering Loop</td>
+                                    <td>7 stops</td>
+                                    <td>7:00 AM - 6:00 PM</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>R002</td>
+                                    <td>Hostel Express</td>
+                                    <td>6 stops</td>
+                                    <td>6:30 AM - 10:00 PM</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>R003</td>
+                                    <td>City Center</td>
+                                    <td>8 stops</td>
+                                    <td>4:00 PM - 9:00 PM</td>
+                                    <td><span class="status-badge inactive">Inactive</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Analytics Page -->
+                <section class="admin-page" id="admin-page-analytics">
+                    <div class="admin-metrics-grid admin-four-cols">
+                        <div class="admin-metric-card compact">
+                            <span class="admin-metric-label">Total Trips</span>
+                            <span class="admin-metric-value">2,847</span>
+                        </div>
+                        <div class="admin-metric-card compact">
+                            <span class="admin-metric-label">Avg. Daily Passengers</span>
+                            <span class="admin-metric-value">1,156</span>
+                        </div>
+                        <div class="admin-metric-card compact">
+                            <span class="admin-metric-label">Total Distance (km)</span>
+                            <span class="admin-metric-value">15,420</span>
+                        </div>
+                        <div class="admin-metric-card compact">
+                            <span class="admin-metric-label">Avg. On-Time Rate</span>
+                            <span class="admin-metric-value">92.3%</span>
+                        </div>
+                    </div>
+                    <div class="admin-charts-row">
+                        <div class="admin-chart-card full-width">
+                            <div class="admin-card-header">
+                                <h3>Daily Ridership (Last 30 Days)</h3>
+                            </div>
+                            <div class="admin-chart-container">
+                                <canvas id="adminRidershipChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-overlay" onclick="closeLoginModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()">×</button>
+
+            <!-- Role Selection -->
+            <div id="roleSelectionPanel">
+                <div class="modal-header">
+                    <h2>Welcome Back</h2>
+                    <p>Select your role to continue</p>
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-role-btn modal-role-student" onclick="selectLoginRole('student')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <span>Student</span>
+                    </button>
+                    <button class="modal-role-btn modal-role-driver" onclick="selectLoginRole('driver')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span>Driver</span>
+                    </button>
+                    <button class="modal-role-btn modal-role-admin" onclick="selectLoginRole('admin')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
+                        <span>Admin</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginFormPanel" style="display:none;">
+                <button class="back-link" onclick="showRoleSelection()">
+                    ← Back to role selection
+                </button>
+                <div class="modal-header">
+                    <div class="login-role-icon" id="loginRoleIcon"></div>
+                    <h2 id="loginRoleTitle">Login</h2>
+                </div>
+                <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+                    <div class="form-group">
+                        <label for="loginUserId">ID / Email</label>
+                        <input type="text" id="loginUserId" required placeholder="Enter your ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full" id="loginSubmitBtn">
+                        Login →
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <!-- Offline Banner -->
+    <div class="offline-banner" id="offlineBanner" style="display:none;">
+        ⚠ Offline - Showing cached data
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

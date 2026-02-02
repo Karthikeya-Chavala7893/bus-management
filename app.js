@@ -298,8 +298,17 @@ function selectLoginRole(role) {
     const roleTitle = document.getElementById('loginRoleTitle');
     roleTitle.textContent = role.charAt(0).toUpperCase() + role.slice(1) + ' Login';
 
+    // Set role-specific icon
     const roleIcon = document.getElementById('loginRoleIcon');
     roleIcon.style.background = roleGradients[role];
+
+    // Add visible emoji icons for each role
+    const roleIcons = {
+        student: '👨‍🎓',
+        driver: '🚌',
+        admin: '👨‍💼'
+    };
+    roleIcon.textContent = roleIcons[role] || '👤';
 
     const submitBtn = document.getElementById('loginSubmitBtn');
     submitBtn.style.background = roleColors[role];

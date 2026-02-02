@@ -345,6 +345,10 @@ textarea {
     height: 56px;
     border-radius: 16px;
     margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
 }
 
 /* -------------------- Toast -------------------- */

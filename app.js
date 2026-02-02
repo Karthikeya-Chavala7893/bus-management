@@ -61,13 +61,29 @@ function getTodaysBookingCount() {
 
 function addBooking(routeId, routeName, stopName, studentId) {
     const data = getBookingData();
+    const currentStudentId = studentId || localStorage.getItem('userId') || 'STU' + Math.floor(Math.random() * 1000);
+    const today = getTodayDateString();
+
+    // Cancel any existing active booking for this student (single booking restriction)
+    let previousBookingCancelled = false;
+    let previousRouteName = '';
+    data.bookings.forEach(booking => {
+        if (booking.studentId === currentStudentId &&
+            booking.date === today &&
+            booking.status === 'confirmed') {
+            booking.status = 'cancelled';
+            previousBookingCancelled = true;
+            previousRouteName = booking.routeName;
+        }
+    });
+
     const booking = {
         id: Date.now(),
         routeId,
         routeName,
         stopName,
-        studentId: studentId || localStorage.getItem('userId') || 'STU' + Math.floor(Math.random() * 1000),
-        date: getTodayDateString(),
+        studentId: currentStudentId,
+        date: today,
         time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
         status: 'confirmed'
     };
@@ -77,6 +93,9 @@ function addBooking(routeId, routeName, stopName, studentId) {
     // Trigger dashboard update if admin is viewing
     updateAdminBookingStats();
 
+    // Return booking along with info about previous cancellation
+    booking.previousCancelled = previousBookingCancelled;
+    booking.previousRouteName = previousRouteName;
     return booking;
 }
 
@@ -973,7 +992,13 @@ function initStudentNavigation() {
 
 function bookSeat(routeId, routeName, stopName) {
     const booking = addBooking(routeId, routeName, stopName);
-    showToast(`🎫 Seat booked on ${routeName}!`);
+
+    // Show appropriate message based on whether a previous booking was cancelled
+    if (booking.previousCancelled) {
+        showToast(`🎫 Seat booked on ${routeName}! (Previous booking on ${booking.previousRouteName} was cancelled)`);
+    } else {
+        showToast(`🎫 Seat booked on ${routeName}!`);
+    }
 
     // Refresh the routes page to show updated booking status
     setTimeout(() => {
